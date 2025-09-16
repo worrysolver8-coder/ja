@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>なおジャーナル</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --fg: #111827;
+        --muted: #6b7280;
+        --accent: #2563eb;
+        --border: #e5e7eb;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--fg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow: hidden; /* 1画面に収めるためスクロール禁止 */
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "YuGothic", "Meiryo", "Noto Sans JP", system-ui, sans-serif;
+      }
+      .viewport {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .inner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: top left; /* translateで中央基準にしてからscale */
+      }
+      .page {
+        box-sizing: border-box;
+        width: 980px; /* 基準レイアウト幅 */
+        max-width: 980px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        padding: 28px 32px;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 左右半分 */
+        gap: 24px;
+        align-items: start;
+      }
+      header h1 {
+        margin: 0 0 4px 0;
+        font-size: 28px;
+        letter-spacing: 0.02em;
+      }
+      header p {
+        margin: 0 0 16px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      h2 {
+        margin: 18px 0 8px;
+        font-size: 20px;
+      }
+      h3 {
+        margin: 16px 0 8px;
+        font-size: 18px;
+      }
+      section + section {
+        margin-top: 8px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 24px;
+      }
+      .block {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 16px;
+      }
+      .block h3 {
+        margin-top: 0;
+      }
+      ul, ol {
+        margin: 8px 0 0 1.25em;
+      }
+      .note {
+        margin-top: 12px;
+        padding: 12px 14px;
+        border: 1px dashed var(--border);
+        border-radius: 10px;
+        background: #fafafa;
+      }
+      .tips {
+        margin-top: 16px;
+        border-top: 1px solid var(--border);
+        padding-top: 12px;
+      }
+      .tips h3 { margin-top: 0; }
+      .muted { color: var(--muted); }
+      /* 右ペイン: YouTube 埋め込み */
+      .video-panel {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px;
+        background: #fff;
+      }
+      .video-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .video-wrap iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="viewport">
+      <div class="inner">
+        <main class="page" aria-label="なおジャーナル">
+          <div class="layout">
+            <div class="left">
+              <header>
+                <h1>なおジャーナル</h1>
+                <p>毎朝 5:00 から Zoom または Discord で online ワークスペース</p>
+              </header>
+
+              <section>
+                <h2>自己実現 ー 夢を叶えるために ー</h2>
+              </section>
+
+              <section class="grid">
+                <div class="block">
+                  <h3>① 目的を明確にする</h3>
+                  <ul>
+                    <li>願望</li>
+                    <li>叶えたい夢</li>
+                    <li>実現したらどうなるのか</li>
+                  </ul>
+                </div>
+
+                <div class="block">
+                  <h3>② 書く内容</h3>
+                  <ul>
+                    <li>３年後の自分</li>
+                    <li>３ヶ月後の自分</li>
+                    <li>今日そのために何をするのか（１〜３個）
+                      <ul>
+                        <li>タスク 1</li>
+                        <li>タスク 2</li>
+                        <li>タスク 3</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="block">
+                  <h3>③ 感謝したことを書く</h3>
+                  <ul>
+                    <li>☆</li>
+                    <li>☆</li>
+                    <li>☆</li>
+                  </ul>
+                </div>
+
+                <div class="block">
+                  <h3>④ メモ、気になったこと</h3>
+                  <div class="note">—</div>
+                </div>
+
+                <div class="block">
+                  <h3>⑤ その他</h3>
+                  <div class="note">—</div>
+                </div>
+              </section>
+
+              <section class="tips">
+                <h3>※ ワンポイント</h3>
+                <ul>
+                  <li>準備するのはノートとペンのみ。お気に入りだと尚いい。</li>
+                  <li>願望を実現するための計画。</li>
+                  <li>基本的に何を書いてもいい。</li>
+                  <li>書けないときはケセラセラ（そんな時もある）と開きなおる。</li>
+                  <li>嬉しい、楽しい、幸せ、ワクワクする、願いがかなったらなっている気持ちになって（想像して）書く。</li>
+                  <li>見返したときに負の感情が湧いてこないようにネガティブは「書きすぎ」ないようにする。<span class="muted">※書いてOK</span></li>
+                  <li>夜その日の振り返りをする。まずは「ノートを見る」だけでいい。</li>
+                </ul>
+              </section>
+            </div>
+
+            <div class="right">
+              <div class="video-panel">
+                <div class="video-wrap">
+                  <iframe
+                    src="https://www.youtube.com/embed/B3UM8TizqYQ"
+                    title="YouTube video"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      (function fitToViewport() {
+        const inner = document.querySelector('.inner');
+        function fit() {
+          if (!inner) return;
+          // 変形をリセットして正しいサイズを取得
+          inner.style.transform = 'translate(-50%, -50%) scale(1)';
+          const width = inner.scrollWidth;
+          const height = inner.scrollHeight;
+          const scale = Math.min(window.innerWidth / width, window.innerHeight / height);
+          inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        }
+        window.addEventListener('load', fit);
+        window.addEventListener('resize', fit);
+        // フォントの遅延読み込み等でリフローする可能性に備えて再試行
+        let tries = 0;
+        const t = setInterval(() => {
+          tries++;
+          fit();
+          if (tries > 10) clearInterval(t);
+        }, 150);
+      })();
+    </script>
+  </body>
+  </html>
