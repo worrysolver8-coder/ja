@@ -91,7 +91,14 @@
         margin-top: 0;
       }
       ul, ol {
-        margin: 8px 0 0 1.25em;
+        margin: 8px 0 0 0; /* 余計な左マージンを排除 */
+        padding-left: 1.1em; /* 最小限の箇条書きインデント */
+        list-style-position: outside;
+      }
+      /* ネストされたリストも寄せすぎない */
+      li > ul, li > ol {
+        margin: 6px 0 0 0;
+        padding-left: 1.1em;
       }
       .note {
         margin-top: 12px;
