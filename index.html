@@ -151,6 +151,9 @@
         background: rgba(37, 99, 235, 0.10);
         border: 1px solid rgba(37, 99, 235, 0.35);
       }
+      /* 右側のワンポイント用ブロック */
+      .tips-panel { margin-top: 16px; }
+      .tips-panel h3 { margin-top: 0; }
     </style>
   </head>
   <body>
@@ -207,24 +210,12 @@
                   <div class="note">—</div>
                 </div>
 
-                <div class="block">
+                <div class="block" id="block-others">
                   <h3>⑤ その他</h3>
                   <div class="note">—</div>
                 </div>
               </section>
 
-              <section class="tips">
-                <h3>※ ワンポイント</h3>
-                <ul>
-                  <li>準備するのはノートとペンのみ。お気に入りだと尚いい。</li>
-                  <li>願望を実現するための計画。</li>
-                  <li>基本的に何を書いてもいい。</li>
-                  <li>書けないときはケセラセラ（そんな時もある）と開きなおる。</li>
-                  <li>嬉しい、楽しい、幸せ、ワクワクする、願いがかなったらなっている気持ちになって（想像して）書く。</li>
-                  <li>見返したときに負の感情が湧いてこないようにネガティブは「書きすぎ」ないようにする。<span class="muted">※書いてOK</span></li>
-                  <li>夜その日の振り返りをする。まずは「ノートを見る」だけでいい。</li>
-                </ul>
-              </section>
             </div>
 
             <div class="right">
@@ -241,12 +232,48 @@
                 </div>
                 <div class="video-caption"><span class="mark">想像を楽しむ</span></div>
               </div>
+              <div class="tips-panel block">
+                <h3>※ ワンポイント</h3>
+                <ul>
+                  <li>準備するのはノートとペンのみ。お気に入りだと尚いい。</li>
+                  <li>願望を実現するための計画。</li>
+                  <li>基本的に何を書いてもいい。</li>
+                  <li>書けないときはケセラセラ（そんな時もある）と開きなおる。</li>
+                  <li>嬉しい、楽しい、幸せ、ワクワクする、願いがかなったらなっている気持ちになって（想像して）書く。</li>
+                  <li>見返したときに負の感情が湧いてこないようにネガティブは「書きすぎ」ないようにする。<span class="muted">※書いてOK</span></li>
+                  <li>夜その日の振り返りをする。まずは「ノートを見る」だけでいい。</li>
+                </ul>
+              </div>
             </div>
           </div>
         </main>
       </div>
     </div>
 
-    <!-- スクロールを有効化したため、ビューポートに合わせるスケール処理は不要 -->
+    <!-- アライメント調整スクリプト：右ワンポイントの開始位置を左「⑤ その他」に合わせる -->
+    <script>
+      (function alignTipsRight() {
+        const right = document.querySelector('.right');
+        const video = document.querySelector('.right .video-panel');
+        const tips = document.querySelector('.right .tips-panel');
+        const others = document.getElementById('block-others');
+        if (!right || !video || !tips || !others) return;
+
+        function align() {
+          // 基準位置（左の⑤ その他のページ内上端）
+          const othersTop = others.getBoundingClientRect().top + window.scrollY;
+          const videoBottom = video.getBoundingClientRect().bottom + window.scrollY;
+
+          // 右側ブロックの上端をothersTopに合わせ、さらに16px上へ
+          const offset = -80; // さらに32px上へ（合計80px上）
+          const desired = Math.round(othersTop - videoBottom + offset);
+          tips.style.marginTop = desired + 'px';
+        }
+
+        window.addEventListener('load', align);
+        window.addEventListener('resize', align);
+        align();
+      })();
+    </script>
   </body>
   </html>
