@@ -21,28 +21,26 @@
         color: var(--fg);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        overflow: hidden; /* 1画面に収めるためスクロール禁止 */
+        overflow-y: auto; /* 縦スクロール可能に */
       }
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "YuGothic", "Meiryo", "Noto Sans JP", system-ui, sans-serif;
       }
       .viewport {
         position: relative;
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
+        width: 100%;
+        min-height: 100vh;
         background: var(--bg);
       }
       .inner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform-origin: top left; /* translateで中央基準にしてからscale */
+        position: static;
+        padding: 24px 0; /* 上下に余白 */
       }
       .page {
         box-sizing: border-box;
-        width: 980px; /* 基準レイアウト幅 */
-        max-width: 980px;
+        width: 100%; /* レスポンシブに */
+        max-width: 980px; /* 基準レイアウト幅の上限 */
+        margin: 0 auto; /* 中央寄せ */
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 12px;
@@ -242,28 +240,6 @@
       </div>
     </div>
 
-    <script>
-      (function fitToViewport() {
-        const inner = document.querySelector('.inner');
-        function fit() {
-          if (!inner) return;
-          // 変形をリセットして正しいサイズを取得
-          inner.style.transform = 'translate(-50%, -50%) scale(1)';
-          const width = inner.scrollWidth;
-          const height = inner.scrollHeight;
-          const scale = Math.min(window.innerWidth / width, window.innerHeight / height);
-          inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
-        }
-        window.addEventListener('load', fit);
-        window.addEventListener('resize', fit);
-        // フォントの遅延読み込み等でリフローする可能性に備えて再試行
-        let tries = 0;
-        const t = setInterval(() => {
-          tries++;
-          fit();
-          if (tries > 10) clearInterval(t);
-        }, 150);
-      })();
-    </script>
+    <!-- スクロールを有効化したため、ビューポートに合わせるスケール処理は不要 -->
   </body>
   </html>
