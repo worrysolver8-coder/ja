@@ -222,6 +222,7 @@
               <div class="video-panel">
                 <div class="video-wrap">
                   <iframe
+                    data-youtube="https://www.youtube.com/embed/ZR3hgw3t8Z4?si=4wAZWd3nZ_0P1Xm8"
                     src="https://www.youtube.com/embed/ZR3hgw3t8Z4"
                     title="YouTube video"
                     loading="lazy"
@@ -249,6 +250,81 @@
         </main>
       </div>
     </div>
+
+    <!-- YouTube URL 正規化スクリプト：watch/shorts/youtu.be も埋め込み用に変換 -->
+    <script>
+      (function normalizeYouTube() {
+        function parseStart(params) {
+          const t = params.get('t') || params.get('start');
+          if (!t) return 0;
+          if (/^\d+$/.test(t)) return parseInt(t, 10);
+          let sec = 0;
+          const re = /(\d+)(h|m|s)/g; let m;
+          while ((m = re.exec(t))) {
+            const v = parseInt(m[1], 10);
+            if (m[2] === 'h') sec += v * 3600;
+            else if (m[2] === 'm') sec += v * 60;
+            else sec += v;
+          }
+          return sec;
+        }
+
+        function toEmbedUrl(raw) {
+          try {
+            const u = new URL(raw, location.href);
+            let id = '';
+            let start = 0;
+
+            const host = u.hostname.replace(/^www\./, '');
+            if (host === 'youtu.be') {
+              id = u.pathname.replace(/^\//, '').split('/')[0];
+              start = parseStart(u.searchParams);
+            } else if (host.endsWith('youtube.com')) {
+              if (u.pathname === '/watch') {
+                id = u.searchParams.get('v') || '';
+                start = parseStart(u.searchParams);
+              } else if (u.pathname.startsWith('/shorts/')) {
+                id = u.pathname.split('/')[2] || '';
+                start = parseStart(u.searchParams);
+              } else if (u.pathname.startsWith('/embed/')) {
+                // すでに埋め込み形式
+                id = u.pathname.split('/')[2] || '';
+                start = parseStart(u.searchParams);
+              }
+            }
+
+            id = (id || '').replace(/[^a-zA-Z0-9_-].*$/, '');
+            if (!id) return null;
+
+            const params = new URLSearchParams();
+            if (start) params.set('start', String(start));
+            params.set('rel', '0');
+            params.set('modestbranding', '1');
+            params.set('playsinline', '1');
+
+            return 'https://www.youtube.com/embed/' + encodeURIComponent(id) + (params.toString() ? '?' + params.toString() : '');
+          } catch (_) {
+            return null;
+          }
+        }
+
+        function run() {
+          const iframe = document.querySelector('.video-wrap iframe');
+          if (!iframe) return;
+          const candidate = iframe.getAttribute('data-youtube') || iframe.getAttribute('src');
+          const embed = candidate ? toEmbedUrl(candidate) : null;
+          if (embed && iframe.src !== embed) {
+            iframe.src = embed;
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', run);
+        } else {
+          run();
+        }
+      })();
+    </script>
 
     <!-- アライメント調整スクリプト：右ワンポイントの開始位置を左「⑤ その他」に合わせる -->
     <script>
